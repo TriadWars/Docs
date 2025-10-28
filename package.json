@@ -14,7 +14,7 @@
     "@astrojs/mdx": "^4.0.5",
     "@astrojs/starlight": "^0.31.0",
     "@fontsource/inter": "^5.1.1",
-    "astro": "^5.1.6",
+    "astro": "^5.1.5",
     "astro-expressive-code": "^0.40.2",
     "astro-icon": "^1.1.5",
     "nanoid": "^3.3.8",
