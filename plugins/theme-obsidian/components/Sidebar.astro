@@ -1,0 +1,50 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import SidebarSublist from './SidebarSublist.astro';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+
+import config from 'virtual:starlight/user-config';
+
+const { sidebar } = Astro.props;
+const shouldRenderSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+---
+
+{/* (STARLIGHT-THEME-OBSIDIAN): Reorder site sidebar to always contain site title */}
+<div class="sidebar-top">
+    <div class="title-wrapper ">
+        <SiteTitle {...Astro.props} />
+    </div>
+    <MobileMenuFooter {...Astro.props} />
+
+    {shouldRenderSearch && <Search {...Astro.props} />}
+</div>
+
+<SidebarPersister {...Astro.props}>
+	<div class="sscroll"><div>
+	<SidebarSublist sublist={sidebar} />
+    </div></div>
+</SidebarPersister>
+
+<style>
+	.sscroll {
+		overflow-y: scroll;
+		visibility: hidden;
+        padding-right: 3px;
+		margin-right: -12px;
+
+        > div {    
+		    visibility: visible;
+        }
+        
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+	}
+
+    .sscroll:hover {
+        visibility: visible;
+    }
+</style>

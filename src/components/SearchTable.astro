@@ -1,0 +1,46 @@
+---
+interface Props {
+  data: Record<string, any>[];
+}
+
+const { data } = Astro.props;
+---
+
+<div class="searchTable">
+    <input id="searchBox" type="text" placeholder="Search..."/>
+    <table>
+      <thead>
+        <tr>
+            {data[0].map((header) => ( <th>{header}</th>  ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.slice(1).map((row) => (
+            <tr>
+              {row.map((value) => ( <td>{value}</td> ))}
+            </tr>
+        ))}
+      </tbody>
+    </table>
+</div>
+
+<script>
+    const tables = document.getElementsByClassName("searchTable");
+    for (var i = 0; tables.length > i; ++i)
+    {
+        const tableDiv = tables[i];
+        const searchBox = tableDiv.getElementsByTagName("input")[0];
+        const table = tableDiv.getElementsByTagName("table")[0];
+    
+        const rows = Array.from(table.querySelectorAll("tbody tr"));
+        searchBox.addEventListener("input", (event) => {
+            const query = event.target.value.toLowerCase();
+
+            rows.forEach((row) => {
+                const cells = Array.from(row.querySelectorAll("td"));
+                const matches = cells.some((cell) => cell.textContent.toLowerCase().includes(query));
+                row.style.display = matches ? "" : "none";
+            });
+        });
+    }
+</script>

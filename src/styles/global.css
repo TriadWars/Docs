@@ -1,0 +1,38 @@
+:root, :root[data-theme='light']
+{
+    --__sl-font: Inter, system-ui, sans-serif !important;
+    
+    --sl-color-accent-high: hsl(60, 79%, 72%);
+    --sl-color-accent: hsl(60, 61%, 66%);
+    --sl-color-accent-low: hsl(60, 55%, 25%);
+    --sl-hero-color: hsla(60, 61%, 66%, 30%);
+
+    --sl-content-width: 50rem;
+
+    
+    --sl-text-2xs: 0.70rem;
+    --sl-text-xs: 0.75rem;
+    --sl-text-sm: 0.8rem;
+    --sl-text-base: 1rem;
+    --sl-text-lg: 1.05rem;
+    --sl-text-xl: 1.15rem;
+    --sl-text-2xl: 1.35rem;
+    --sl-text-3xl: 1.65rem;
+    --sl-text-4xl: 2rem;
+    --sl-text-5xl: 2.4rem;
+    --sl-text-6xl: 4rem;
+}
+
+.sl-markdown-content {
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.expressive-code .ec-line {
+    margin: 0;
+}

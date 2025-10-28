@@ -1,0 +1,228 @@
+---
+import { flattenSidebar, type SidebarEntry } from '../../../node_modules/@astrojs/starlight/utils/navigation';
+import { Badge } from '@astrojs/starlight/components';
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+	sublist: SidebarEntry[];
+	nested?: boolean;
+}
+
+const { sublist, nested } = Astro.props;
+---
+
+<ul class:list={{ 'top-level': !nested }}>
+	{
+		sublist.map((entry) => (
+			<li>
+				{entry.type === 'link' ? (
+					<a
+						href={entry.href}
+						aria-current={entry.isCurrent && 'page'}
+						class:list={[{ large: !nested }, entry.attrs.class]}
+						{...entry.attrs}
+					>
+						<span>{entry.label}</span>
+						{entry.badge && (
+							<Badge
+								variant={entry.badge.variant}
+								class={entry.badge.class}
+								text={entry.badge.text}
+							/>
+						)}
+					</a>
+				) : (
+					<details
+						open={flattenSidebar(entry.entries).some((i) => i.isCurrent) || !entry.collapsed}
+					>
+						<summary>
+							{entry.label.includes("[") && (
+								<Icon name={entry.label.split("[").pop()?.split("]")[0] || ""} class="sicon"/>
+							)}
+							<div class="group-label">
+								<span class="large">{entry.label.split("]").pop()?.trim()}</span>
+								{entry.badge && (
+									<Badge
+										variant={entry.badge.variant}
+										class={entry.badge.class}
+										text={entry.badge.text}
+									/>
+								)}
+							</div>
+							<Icon name="chevron" class="caret" size="1.25rem"/>
+							
+						</summary>
+						<div class="slist">
+							<Astro.self sublist={entry.entries} nested />
+						</div>
+					</details>
+				)}
+			</li>
+		))
+	}
+</ul>
+
+<script>
+	const details = document.querySelectorAll("details");
+	for (var i = 0; details.length > i; ++i)
+	{
+		const detail = details[i];
+		const list = detail.getElementsByClassName("slist")[0];
+		if (list === undefined) {
+			continue;
+		}
+
+		list.classList.add("js");
+		if (detail.hasAttribute("open")) {	
+			list.classList.add("open");
+		}
+
+		detail.children[0].addEventListener("click", (e) => 
+		{
+			e.stopPropagation();
+			if (detail.hasAttribute("open")) 
+			{
+				e.preventDefault();
+				list.classList.remove("open");
+				setTimeout(() => { detail.removeAttribute("open"); }, 200);
+			}
+			else {
+				list.classList.add("open");
+			}
+		});
+	}
+</script>
+
+<style>
+	.slist.js {	
+ 		display: grid;
+		grid-template-rows: 0fr;
+  		transition: grid-template-rows 0.2s ease-in-out;
+	
+		&.open {
+			grid-template-rows: 1fr;
+		}
+	 	> ul {
+			overflow: hidden;
+		}
+	}
+
+	ul {
+		--sl-sidebar-item-padding-inline: 0.5rem;
+		list-style: none;
+		padding: 0;
+	}
+	
+	li {
+		overflow-wrap: anywhere;
+	}
+
+	ul ul li {
+		padding-top: 3px;
+		margin-inline-start: var(--sl-sidebar-item-padding-inline);
+		border-inline-start: 1px solid var(--sl-color-hairline-light);
+		padding-inline-start: var(--sl-sidebar-item-padding-inline);
+	}
+
+	.large {
+		font-size: var(--sl-text-lg);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.top-level {
+		overflow: auto;
+	}
+
+	.top-level > li + li {
+		margin-top: 0.75rem;
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.2em var(--sl-sidebar-item-padding-inline);
+		line-height: 1.4;
+		cursor: pointer;
+		user-select: none;
+		border-radius: 5px;
+    	transition: color 0.1s linear, background-color 0.1s linear;
+	}
+	
+	summary:hover {
+		background-color: rgba(100, 100, 100, 0.1);
+	}
+
+	summary .large
+	{
+    	transition: color 0.1s linear;
+	}
+
+	summary::marker,
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.sicon {
+		opacity: 75%;
+	}
+
+	.caret {
+		margin-left: auto;
+		transition: transform 0.2s ease-in-out, background-color 0.1s linear;
+		flex-shrink: 0;
+		border-radius: 100%;
+		transform: rotateZ(90deg);
+	}
+	.caret:hover {
+		background-color: rgba(100, 100, 100, 0.1);
+	}
+	:global([dir='rtl']) .caret {
+		transform: rotateZ(180deg);
+	}
+	[open] > summary .caret {
+		transform: rotateZ(180deg);
+	}
+
+	a {
+		display: block;
+		border-radius: 0.25rem;
+		text-decoration: none;
+		color: var(--sl-color-gray-2);
+		padding: 0.3em var(--sl-sidebar-item-padding-inline);
+		line-height: 1.4;
+		transition: transform 0.2s ease-in-out, background-color 0.1s linear;
+	}
+
+	a:hover,
+	a:focus {
+		color: var(--sl-color-white);
+		background-color: rgba(100, 100, 100, 0.1);
+	}
+
+	[aria-current='page'],
+	[aria-current='page']:hover,
+	[aria-current='page']:focus {
+		font-weight: 600;
+		color: var(--sl-color-text-invert);
+		background-color: var(--sl-color-text-accent);
+	}
+
+	a > *:not(:last-child),
+	.group-label > *:not(:last-child) {
+		margin-inline-end: 0.25em;
+	}
+
+	@media (min-width: 50rem) {
+		.top-level > li + li {
+			margin-top: 0.5rem;
+		}
+		.large {
+			font-size: var(--sl-text-base);
+		}
+		a {
+			font-size: var(--sl-text-sm);
+		}
+	}
+</style>

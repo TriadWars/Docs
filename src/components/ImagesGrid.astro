@@ -1,0 +1,133 @@
+---
+interface Props {
+    path: string;
+    list: Record<string, any[]>;
+}
+
+const { path, list } = Astro.props;
+
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+const images = import.meta.glob<{ default: ImageMetadata }>("/src/assets/**/*.{jpg,png}");
+function GetImage(name) { return images[`${path}/${name}`](); }
+
+const headers = list.headers;
+delete list.headers;
+---
+
+<div class="imagesGridWrapper">
+    <input id="searchBox" type="text" placeholder="Search by Name, Hash, or Category..." />
+    
+    {Object.entries(list).map(([category, items]) => (
+        <div class="category-section">
+            <h2 id={category.toLowerCase().replace(/\s+/g, '-')}>{category}</h2>
+            <ul class="imagesGrid">
+                {items.map((item) => (
+                    <li 
+                        data-category={category.toLowerCase()}
+                        {...Object.fromEntries(
+                            item.slice(1).map((text, index) => [
+                                `data-${headers[index + 1].toLowerCase()}`,
+                                text.toLowerCase()
+                            ])
+                        )}
+                    >
+                        <div>
+                            <starlight-image-zoom-zoomable>
+                                <Image src={(GetImage(item[0]))} alt={item[1]}/>
+                            </starlight-image-zoom-zoomable>
+                        </div>
+                        {item.slice(1).map((text, index) => (
+                            <span><b>{headers[index + 1]}</b>: {text}</span>
+                        ))}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    ))}
+</div>
+
+<style>
+    .imagesGrid {
+        display: grid;
+        padding: 0;
+        list-style: none;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .imagesGrid img {
+        border: 1px solid var(--sl-color-gray-5);
+    }
+
+    .imagesGrid b {
+        color: #fff;
+    }
+
+    @media screen and (max-width: 992px) {
+        .imagesGrid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .imagesGrid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .imagesGrid > li {
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        background-color: var(--sl-color-black);
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 0.25rem;
+        margin-top: 0px !important;
+    }
+
+    .category-section {
+        margin-bottom: 2rem;
+    }
+
+    .category-section h2 {
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchBox = document.getElementById("searchBox");
+        const categories = document.querySelectorAll(".category-section");
+        const items = document.querySelectorAll(".imagesGrid > li");
+
+        const searchIndex = [];
+
+        items.forEach(item => {
+            const datasetValues = Object.values(item.dataset);
+            searchIndex.push({ item, datasetValues, category: item.dataset.category });
+        });
+
+        searchBox.addEventListener("input", (event) => {
+            const query = event.target.value.toLowerCase();
+            let visibleCategories = new Set();
+
+            items.forEach(item => (item.style.display = "none"));
+
+            searchIndex.forEach(({ item, datasetValues, category }) => {
+                // Check if any dataset value contains the query
+                if (datasetValues.some(value => value.includes(query))) {
+                    item.style.display = "flex";
+                    visibleCategories.add(category);
+                }
+            });
+
+            categories.forEach(category => {
+                const categoryName = category.querySelector("h2").textContent.toLowerCase();
+                category.style.display = visibleCategories.has(categoryName) ? "block" : "none";
+            });
+        });
+    });
+</script>
