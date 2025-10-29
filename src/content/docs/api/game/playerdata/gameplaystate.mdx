@@ -1,0 +1,16 @@
+---
+title: Player Data - Gameplay State
+sidebar:
+  label: /gameplaystate
+---
+
+<pre>GET: [/game/api/v1/playerdata/gameplaystate](#)</pre>
+
+#### Response
+```json
+{
+    "mGameplayState": "string"
+}
+```
+
+The `mGameplayState` should be `"empty"` or `"beginning tutorial"` if player didn't setup their enforcer, otherwise it can be any string.
