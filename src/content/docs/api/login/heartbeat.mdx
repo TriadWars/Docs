@@ -4,8 +4,24 @@ sidebar:
   label: /heartbeat
 ---
 
-<pre>POST: [/login/api/v1/heartbeat](#)</pre>
+<pre>
+GET: [/login/api/v1/heartbeat](#)
+POST: [/login/api/v1/heartbeat](#)
+</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+The client sends a request to this API every minute to check if the session is still valid.
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+#### Request
+Used only in POST requests.
+
+```json
+{ 
+    "gametime": "integer",
+    "activeplaytime": "integer"
+}
+```
+
+#### Response
+The response has no body.
+
+The server should respond with status code `200 OK` only if the session is valid, otherwise the status code should be `403 Forbidden`.

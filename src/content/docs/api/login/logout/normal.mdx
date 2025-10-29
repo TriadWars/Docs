@@ -6,6 +6,10 @@ sidebar:
 
 <pre>POST: [/login/api/v1/logout/Normal](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Request
+The request has no body.
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+#### Response
+The client does not check the response, but the server should still return at least status code `200 OK`.
+
+Use this API to invalidate the player’s session data.
