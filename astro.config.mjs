@@ -45,7 +45,8 @@ export default defineConfig({
         	components: {
         	},
         	sidebar: [
-        	    { label: "[connection] API", collapsed: true, autogenerate: { directory: "api" } }
+        	    { label: "[connection] API", collapsed: true, autogenerate: { directory: "api" } },
+        	    { label: "[server] Server", collapsed: true, autogenerate: { directory: "server" } }
         	]
 		})
 	],

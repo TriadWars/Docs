@@ -1,0 +1,27 @@
+---
+title: Commerce - Store Link
+sidebar:
+  label: /storelink
+---
+
+<pre>GET: [/commerce/api/v1/storelink](#)</pre>
+
+This seems to be related to the premium shop and is sent by the client from places such as:
+- Black Market
+- Favour Shop
+- Feature Shop
+- Garage Shop
+- Store Item Details
+- Wardrobe Shop
+- Gold Shop
+
+#### Response
+```json
+{
+    "mReturnCode": 0,
+    "mMessage": "optional",
+    "mStoreURL": "optional"
+}
+```
+
+If [mReturnCode](/server/returncodes) is something else than 0 or `mStoreURL` is not set the game will use hardcoded url to https://triadwars.com/store
