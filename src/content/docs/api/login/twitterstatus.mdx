@@ -6,6 +6,20 @@ sidebar:
 
 <pre>GET: [/login/api/v1/twitterstatus](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+Requested by the client when the News Feed state changes.
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+#### Response
+```json
+{
+    "mReturnCode": 0,
+    "mMessage": "optional",
+
+    // TwitterResponse
+    "mText": "optional",
+    "mStatusUrl": "optional",
+    "mTwitterUrl": "optional",
+    "mUserName": "optional",
+    "mTwitterUserName": "optional",
+    "mProfileImageUrl": "optional"
+}
+```

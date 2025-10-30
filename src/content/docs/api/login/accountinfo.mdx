@@ -6,6 +6,22 @@ sidebar:
 
 <pre>GET: [/login/api/v1/accountinfo](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
+```json
+{
+    "mReturnCode": 0,
+    "mMessage": "optional",
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+    // AccountInfoResponse
+    "AvatarUrl": "optional",
+    "SEAvatarUrl": "optional",
+    "FacebookLinked": "boolean",
+    "FacebookAvatarUrl": "optional",
+    "SteamLinked": "boolean",
+    "SteamAvatarUrl": "optional",
+    "SteamLink": "optional",
+    "GravatarUrl": "optional",
+    "GravatarLink": "optional",
+    "Email": "optional"
+}
+```
