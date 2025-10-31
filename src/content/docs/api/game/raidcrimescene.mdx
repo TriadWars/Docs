@@ -11,4 +11,15 @@ POST: [/game/api/v1/raidcrimescene/:opponentindex(\\\\d+)/:rackettypeuid(\\\\d+)
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+<Aside>A request containing `rackettypeuid` and `roomid` is sent when the crime scene occurs inside a racket. Otherwise, it occurs outside the racket.</Aside>
+
+#### Response
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+    "mDataBags": {}
+}
+```
+
+For details on `mDataBags`, see [Serialized Player Data](../playerdata/serializedplayerdata).

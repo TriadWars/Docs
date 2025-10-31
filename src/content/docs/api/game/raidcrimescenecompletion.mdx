@@ -6,6 +6,15 @@ sidebar:
 
 <pre>POST: [/game/api/v1/raidcrimescenecompletion/:crimesceneid(\\\\d+)/:respected(true|false)](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+    "CrimeSceneID": "?",
+    "FaceCollected": 0, // optional; omit if 0
+    "mDataBags": {}
+}
+```
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+For details on `mDataBags`, see [Serialized Player Data](../playerdata/serializedplayerdata).

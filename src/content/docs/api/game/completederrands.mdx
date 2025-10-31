@@ -6,6 +6,29 @@ sidebar:
 
 <pre>GET: [/game/api/v1/completederrands](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+**On Error:**
+```json
+{
+    "mReturnCode": 1,
+    "mMessage": "mMessage"
+}
+```
+
+---
+
+**On Success:**
+```json
+[
+    {
+        "CompletedErrandID": 0,
+        "PlayerDataID": 0,
+        "mErrandUID": "?",
+        "mTimesCompleted": 0,
+        "mLastUpdated": "?"
+    }
+]
+```
+
+> An array of errands. May contain multiple entries.

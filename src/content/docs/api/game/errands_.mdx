@@ -1,0 +1,32 @@
+---
+title: Game - Errands
+sidebar:
+  label: /errands
+---
+
+<pre>GET: [/game/api/v1/errands](#)</pre>
+
+#### Response
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+
+    // ErrandSlotInfoResponse
+    "mSecondsToRefresh": 0,
+    "mServerUTC": "?",
+    "mErrands":
+    [
+        {
+            "mState": 0, // optional; omit if 0
+            "mSlotIndex": 0,
+            "mErrandUID": "?",
+            "mTimeBegun": "?"
+        }
+    ]
+}
+```
+
+The `mErrands` field contains an array of objects. Each object represents a single errand, and multiple errands may be returned.
+
+For errand state values you can check them by [clicking here](/server/errandstate).

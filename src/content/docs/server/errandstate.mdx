@@ -1,0 +1,17 @@
+---
+title: Server - Errand State
+sidebar:
+  label: Errand State
+---
+
+import SearchTable from "@components/SearchTable.astro"
+
+import { Aside } from '@astrojs/starlight/components';
+
+<SearchTable data={[
+    ["Name", "Value"],
+    ["Active", "0"],
+    ["Completed", "1"],
+    ["Reward Collected", "2"],
+    ["Invalid", "3"]
+]} />

@@ -4,8 +4,43 @@ sidebar:
   label: /openworldcrimescene
 ---
 
-<pre>GET: [/game/api/v1/openworldcrimescene](#)</pre>
+<pre>
+GET: [/game/api/v1/openworldcrimescene](#)
+POST: [/game/api/v1/openworldcrimescene/:locationx(\\\\d+)/:locationy(\\\\d+)/:locationz(\\\\d+)/:facelost(\\\\d+)](#)
+</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+**On GET:**
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+
+    // OpenWorldCrimeSceneResponse
+    "CrimeScenes": // optional
+    [
+        {
+            "OpenWorldCrimeSceneID": "?",
+            "DeathX": 0,
+            "DeathY": 0,
+            "DeathZ": 0,
+            "VictimPlayerDataIDString": "?",
+            "Collected": 0 // boolean
+        }
+    ]
+}
+```
+
+---
+
+**On POST:**
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+    "mDataBags": {}
+}
+```
+
+For details on `mDataBags`, see [Serialized Player Data](../playerdata/serializedplayerdata).

@@ -6,6 +6,11 @@ sidebar:
 
 <pre>GET: [/game/api/v1/storeaccess](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
+```json
+{
+    "mHasAccess": 1 // optional
+}
+```
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+If `mHasAccess` is not set or is set to 0, the Premium Store functionality is disabled in the game.
