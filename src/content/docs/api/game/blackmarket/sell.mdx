@@ -6,6 +6,19 @@ sidebar:
 
 <pre>POST: [/game/api/v1/blackmarket/sell/:typeuid(\\\\d+)/:amount(\\\\d+)](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
+```json
+{
+    "mReturnCode": 0, // optional; omit if 0
+    "mMessage": "optional",
+    "mDataBags": {},
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+    // BlackmarketResponse
+    "CommodityName": "?",
+    "CommodityUID": "?",
+    "AmountEarned": 0, // Sell Price
+    "AmountSold": 0.0
+}
+```
+
+For details on `mDataBags`, see [Serialized Player Data](../../playerdata/serializedplayerdata).

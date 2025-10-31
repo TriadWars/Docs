@@ -6,6 +6,33 @@ sidebar:
 
 <pre>GET: [/game/api/v1/blackmarket/quotes](#)</pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+**On Error:**
+```json
+{
+    "mReturnCode": 1,
+    "mMessage": "mMessage"
+}
+```
+
+---
+
+**On Success:**
+```json
+[
+    {
+        "CommodityName": "?",
+        "CommodityUID": "?",
+        "AmountInMarket": 0,
+
+        // Each of the following fields is optional; omit any field whose value is 0.0
+        "BuyPrice": 0.0,
+        "DiscountedBuyPrice": 0.0,
+        "SellPrice": 0.0,
+        "BonusSellPrice": 0.0
+    }
+]
+```
+
+> An array of commodities. May contain multiple entries.
