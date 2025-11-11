@@ -9,6 +9,282 @@ GET: [/game/api/v1/playerdata/serializedplayerdata/:requestedbags(\\\\d+)](#)
 GET: [/game/api/v1/playerdata/serializedplayerdata/:requestedbags(\\\\d+)/opponent/:index(\\\\d+)](#)
 </pre>
 
-import { Aside } from '@astrojs/starlight/components';
+#### Response
+The `requestedbags` parameter specifies which data bags to include in the response.
 
-<Aside type="caution" title="TODO">Add documentation for this endpoint.</Aside>
+The same bitflags value is also returned in the response JSON as the `mRequestedBags` field, indicating which bags were actually included. See [Data Bags](/game/databags) for details on available flags.
+
+The response is composed of a single JSON object that may include one or more of the data bags described below.
+
+```json
+{
+    "mRequestedBags": 0 // omit if supplying no data bags
+}
+```
+
+---
+**Player Data:**
+
+```json
+{
+    "PlayerDataBag":
+    {
+        "PlayerDataID": 0,
+        "AccountID": 0,
+        "Name": "?",
+        "Triad": "?", // 18K, ShingWo, SunOnYee
+        "EnforcerXP": 0,
+        "Face": 0,
+        "LastUsedVehicle": "?"
+    }
+}
+```
+
+---
+**Customization:**
+
+```json
+{
+    "CustomizationBag":
+    {
+        "ClothingStoreItemUIDs": [ "?" ],
+        "ClothingOutfitCortexUID": "?",
+        "ScalingPresetCortexUID": "?",
+        "MeleeWeapon": "?",
+        "OneHandedWeapon": "?",
+        "TwoHandedWeapon": "?"
+    }
+}
+```
+
+---
+**Informants:**
+
+```json
+{
+    "InformantsBag":
+    [
+        {
+            "InformantID": "?",
+            "InformantTypeUID": "?",
+            "SecondsElapsed": 0,
+            "TotalSeconds": 0
+        }
+    ]
+}
+```
+
+---
+**Favours:**
+
+```json
+{
+    "FavoursBag":
+    [
+        {
+            "FavourID": "?",
+            "FavourDefinitionUID": "?",
+            "SecondsElapsed": 0,
+            "TotalSeconds": 0,
+            "IsNew": 0
+        }
+    ]
+}
+```
+
+---
+**Active Favours:**
+
+```json
+{
+    "ActiveFavoursBag":
+    [
+        {
+            "PlayerDataID": 0,
+            "ActiveFavourID": "?",
+            "ActiveFavourDefinitionUID": "?",
+            "SecondsElapsed": 0,
+            "TotalSeconds": 0
+        }
+    ]
+}
+```
+
+---
+**Currency:**
+
+```json
+{
+    "CurrencyBag":
+    {
+        "LaunderedMoney": 0,
+        "LaundrySecondsRemaining": 0,
+        "CleanMoney": 0,
+        "DirtyMoney": 0
+    }
+}
+```
+
+---
+**Turf:**
+
+```json
+{
+    "TurfBag":
+    {
+        "Turf":
+        {
+            "LocationName": "?",
+            "TurfTemplateUID": "?",
+            "Safehouse":
+            {
+                "RacketTypeUID": "?",
+                "RacketLevel": 0,
+                "Staff": 0,
+                "BlockIndex": 0,
+                "RacketState": 0,
+                "SlotIndex": 0,
+                "CurrentProduction": 0,
+                "Production1": 0,
+                "Production2": 0,
+                "Production3": 0,
+                "Production4": 0,
+                "Production5": 0,
+                "Production6": 0,
+                "Production7": 0,
+                "Production8": 0,
+                "Production9": 0,
+                "Production10": 0,
+                // These fields below might be incorrect:
+                "MaxStaff": 0,
+                "OutputMultiplier": 0.0,
+                "ProductionTimeDivision": 0.0,
+                "UpgradeDiscountMultiplier": 0.0,
+                "ProductionInputDiscountDivision": 0.0,
+                "NoStaffSpawn": 0
+            },
+            "Warehouse": {}, // same fields as "SafeHouse"
+            "Temple": {}, // same fields as "SafeHouse"
+        },
+        "Rackets":
+        [
+            {} // same fields as "SafeHouse" in "Turf"
+        ],
+        "Commodities":
+        [
+            {
+                "CommodityUID": "?",
+                "Amount": 0
+            }
+        ]
+    }
+}
+```
+
+---
+**Inventory:**
+
+```json
+{
+    "InventoryBag":
+    [
+        {
+            "StoreItemID": "?",
+            "InventoryItemID": "?",
+            "AccountID": "?",
+            "SecondsElapsed": 0,
+            "TotalSeconds": 0
+        }
+    ]
+}
+```
+
+---
+**Shield:**
+
+This should not be included in responses for the `/opponent/:index` endpoint.
+
+```json
+{
+    "ShieldBag": 0 // Shield Timer in seconds
+}
+```
+
+---
+**Trials:**
+
+This should not be included in responses for the `/opponent/:index` endpoint.
+
+```json
+{
+    "TrialsBag":
+    {
+        "mPreviousContainer":
+        {
+            "mTrial":
+            {
+                "DisplayName": "?",
+                "CompletedName": "?",      
+                "DisplayDescription": "?",
+                "CompletedDescription": "?",
+                "CountDescription1": "?",
+                "CountDescription2": "?",
+                "CountDescription3": "?",
+                "TargetImage": "?",
+                "TargetName": "?",
+                "StatName": "?",
+                "Targets0": "?",
+                "Targets1": "?",
+                "Targets2": "?",
+                "CallToActionDesc": "?",
+                "CallToActionItem": "?",
+                "CallToActionDestination": 0
+            },
+            // omit all fields below if "mTrial" is not defined.
+            "mTrialStartSeconds": 0,
+            "mTrialEndSeconds": 0,
+            "mPlayerProgress": // optional
+            {
+                "TrialInstanceID": "?",
+                "Reward0": "?",
+                "Reward1": "?",
+                "Reward2": "?",
+                "Optional": 0,
+                "OptIn": 0
+            },
+            "mBonusFavour": // optional
+            {
+                "PlayerDataID": 0,
+                "ActiveFavourID": "?",
+                "ActiveFavourDefinitionUID": "?",
+                "SecondsElapsed": 0,
+                "TotalSeconds": 0
+            }
+        },
+        "mCurrentContainer": {}, // same fields as "mPreviousContainer"
+        "mNextContainer": {} // same fields as "mPreviousContainer"
+    }
+}
+```
+
+---
+**Export Rewards:**
+
+This should not be included in responses for the `/opponent/:index` endpoint.
+
+```json
+{
+    "ExportRewardsBag":
+    {
+        "ExportMissionSlots":
+        [
+            {
+                "mCommodity1UID": "?",
+                "mCommodity1Amount": 0,
+                "mFaceReward": 0,
+                "mMoneyReward": 0
+            }
+        ]
+    }
+}
+```

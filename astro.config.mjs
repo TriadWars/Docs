@@ -46,6 +46,7 @@ export default defineConfig({
         	},
         	sidebar: [
         	    { label: "[connection] API", collapsed: true, autogenerate: { directory: "api" } },
+        	    { label: "[game] Game", collapsed: true, autogenerate: { directory: "game" } },
         	    { label: "[server] Server", collapsed: true, autogenerate: { directory: "server" } }
         	]
 		})

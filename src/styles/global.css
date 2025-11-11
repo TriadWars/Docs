@@ -36,3 +36,19 @@
 .expressive-code .ec-line {
     margin: 0;
 }
+
+.ec-section
+{
+    summary {
+        margin: 0 !important
+    }
+    
+    summary:before {
+        display: none !important;
+    }
+
+    .content-lines {
+        margin: 0 !important;
+    }
+}
+

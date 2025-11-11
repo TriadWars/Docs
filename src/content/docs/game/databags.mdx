@@ -1,0 +1,26 @@
+---
+title: Game - Data Bags
+sidebar:
+  label: Data Bags
+---
+
+import SearchTable from "@components/SearchTable.astro"
+
+import { Aside } from '@astrojs/starlight/components';
+
+<SearchTable data={[
+    ["Name", "Bit Index", "Bitmask Value"],
+    ["Player Data", "0", "1"],
+    ["Customization", "1", "2"],
+    ["Informants", "2", "4"],
+    ["Favours", "3", "8"],
+    ["Active Favours", "4", "16"],
+    ["Upgrades", "5", "32"],
+    ["Currency", "6", "64"],
+    ["Turf", "7", "128"],
+    ["Inventory", "8", "256"],
+    ["Shield", "9", "512"],
+    ["Trials", "10", "1024"],
+    ["Export Rewards", "11", "2048"],
+    ["Enforcer Upgrades", "12", "4096"]
+]} />
